@@ -2,8 +2,6 @@ package io.github.wendergalan.desafio;
 
 import io.github.wendergalan.desafio.model.entity.Licitacao;
 import io.github.wendergalan.desafio.model.entity.Proposta;
-import io.github.wendergalan.desafio.model.repository.LicitacaoRepository;
-import io.github.wendergalan.desafio.model.repository.PropostaRepository;
 import io.github.wendergalan.desafio.service.LicitacaoService;
 import io.github.wendergalan.desafio.service.PropostaService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 import static io.github.wendergalan.desafio.model.enums.TipoClassificacao.MENOR_PRECO;
 import static io.github.wendergalan.desafio.model.enums.TipoClassificacao.NOTA_PRECO;
@@ -46,7 +43,7 @@ public class DesafioApplication extends SpringBootServletInitializer {
     }
 
     /**
-     * On load.
+     * Faz a inserção dos itens que estavam descritos no README do projeto.
      */
     @PostConstruct
     @Transactional
