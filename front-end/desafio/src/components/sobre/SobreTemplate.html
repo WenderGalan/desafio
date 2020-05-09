@@ -1,0 +1,27 @@
+<v-app>
+  <v-content>
+    <h1 align="center" class="mb-12">Desafio API AZ</h1>
+    <v-col cols="12">
+      <v-row align="center" class="mb-12" justify="center">
+        <h3>A API está hospedada no heroku para não ter que rodar o projeto, assim como o front-end no netlify.</h3>
+        <h3>
+          Os links encontra-se em cada README.md dos pacotes.
+        </h3>
+      </v-row>
+    </v-col>
+    <v-col cols="12">
+      <v-row align="center" justify="center">
+        <v-img
+          :src="urlLogo"
+          @click="openGithub"
+          class="img"
+          max-height="350px"
+          max-width="350px"
+        />
+      </v-row>
+      <v-row align="center" justify="center">
+        <p>Clique na imagem para ser direcionado para a branch onde está o projeto.</p>
+      </v-row>
+    </v-col>
+  </v-content>
+</v-app>

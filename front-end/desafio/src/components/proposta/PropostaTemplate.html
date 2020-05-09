@@ -1,0 +1,140 @@
+<v-data-table
+  :calculate-widths="calculateWidths"
+  :headers="computedHeaders"
+  :items="items"
+  :loading="loadingData"
+  :loading-text="loadingText"
+  :options.sync="optionsTable"
+  :server-items-length="serverItemsLength"
+  @pagination="updatePagination"
+  class="elevation-1"
+  sort-by="calories"
+>
+  <template v-slot:top>
+    <v-toolbar flat>
+      <v-spacer />
+      <template>
+        <v-btn
+          @click="classificarPropostas"
+          class="mb-2 mr-4"
+          color="primary" dark
+        >
+          <v-icon
+            class="mr-2"
+            small
+          >
+            mdi-sort
+          </v-icon>
+          Classificar
+        </v-btn>
+      </template>
+      <v-dialog max-width="1000px" v-model="dialog">
+        <template v-slot:activator="{ on }">
+          <v-btn
+            class="mb-2"
+            color="primary"
+            dark v-on="on"
+          >
+            <v-icon
+              class="mr-2"
+              small
+            >
+              mdi-plus
+            </v-icon>
+            Proposta
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title>
+            <span class="headline">{{ formTitle }}</span>
+          </v-card-title>
+
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="12" md="12" sm="12">
+                  <v-text-field
+                    :rules="[() => !!record.fornecedor || 'Este campo é requirido']"
+                    autofocus clearable
+                    label="Fornecedor *"
+                    outlined
+                    ref="fornecedor"
+                    required v-model="record.fornecedor"
+                  />
+                </v-col>
+                <v-col cols="12" md="6" sm="6">
+                  <v-text-field
+                    :rules="[() => !!record.preco || 'Este campo é requirido']" clearable
+                    label="Preço *"
+                    outlined
+                    prefix="R$"
+                    ref="preco"
+                    required
+                    type="number" v-model.number="record.preco"
+                  />
+                </v-col>
+                <v-col cols="12" md="6" sm="6">
+                  <v-text-field
+                    :disabled="licitacao.tipoClassificacao !== 'NOTA_PRECO'"
+                    :label="licitacao.tipoClassificacao !== 'NOTA_PRECO' ? 'Nota' : 'Nota *'"
+                    :required="licitacao.tipoClassificacao === 'NOTA_PRECO'"
+                    :rules="[() => !!record.nota || 'Este campo é requirido', () => record.nota >= 0 && record.nota <= 10 || 'A nota deve ser um valor entre 0 e 10']"
+                    clearable
+                    outlined
+                    ref="nota"
+                    type="number"
+                    v-model.number="record.nota"
+                  />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn @click="close" color="blue darken-1" text>Cancelar</v-btn>
+            <v-btn @click="save" color="blue darken-1" text>Salvar</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-toolbar>
+  </template>
+  <template v-slot:item.nota="{ item }">
+    <v-chip :color="getColor(item.nota)" dark>
+      {{ item.nota }}
+    </v-chip>
+  </template>
+  <template v-slot:item.preco="{ item }">
+    <span>R$ {{ parseFloat(item.preco).toFixed(2) }}</span>
+  </template>
+  <template v-slot:item.actions="{ item }">
+    <v-tooltip bottom>
+      <template #activator="{ on }">
+        <v-icon
+          @click="editItem(item)"
+          class="mr-4"
+          v-on="on"
+        >
+          mdi-pencil
+        </v-icon>
+      </template>
+      <span>Editar</span>
+    </v-tooltip>
+    <v-tooltip bottom>
+      <template #activator="{ on }">
+        <v-icon
+          @click="deleteItem(item)"
+          class="mr-4"
+          v-on="on"
+        >
+          mdi-delete
+        </v-icon>
+      </template>
+      <span>Deletar</span>
+    </v-tooltip>
+  </template>
+  <template v-slot:no-data>
+    <span>Não há registros, tente </span>
+    <a @click="findPropostas">atualizar.</a>
+  </template>
+</v-data-table>
