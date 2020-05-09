@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import PersonTable from './components/person/PersonTable'
-import About from './components/About'
+import Licitacao from './components/licitacao/Licitacao'
+import Proposta from './components/proposta/Proposta'
+import Sobre from './components/Sobre'
 
 Vue.use(Router)
 
@@ -10,16 +11,24 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      component: PersonTable,
+      component: Licitacao,
       meta: {
-        title: 'Person API - Home'
+        title: 'Licitações'
       }
     },
     {
-      path: '/about',
-      component: About,
+      name: 'propostas',
+      path: '/propostas',
+      component: Proposta,
       meta: {
-        title: 'Person API - About'
+        title: 'Propostas'
+      }
+    },
+    {
+      path: '/sobre',
+      component: Sobre,
+      meta: {
+        title: 'Sobre'
       }
     },
     {

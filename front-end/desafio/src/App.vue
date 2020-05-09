@@ -25,10 +25,7 @@ import Toolbar from './components/Toolbar'
 
 export default {
   name: 'App',
-  components: { Toolbar },
-  data: () => ({
-    //
-  })
+  components: { Toolbar }
 }
 </script>
 
