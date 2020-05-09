@@ -1,5 +1,6 @@
 package io.github.wendergalan.desafio.api.dto;
 
+import io.github.wendergalan.desafio.model.entity.Licitacao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,12 +23,14 @@ public class PropostaDTO {
     @NotNull
     private String fornecedor;
 
-    private Long nota;
+    private Double nota;
 
     @NotNull
-    private Long preco;
+    private Double preco;
 
     private LocalDateTime dataCadastro;
 
     private Integer classificacao;
+
+    private LicitacaoDTO licitacao;
 }

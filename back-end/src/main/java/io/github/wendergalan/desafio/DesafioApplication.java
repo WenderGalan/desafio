@@ -56,14 +56,14 @@ public class DesafioApplication extends SpringBootServletInitializer {
         licitacaoService.salvar(l1);
         licitacaoService.salvar(l2);
 
-        Proposta p1 = Proposta.builder().licitacao(l1).fornecedor("Fornecedor A").nota(8L).preco(110L).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 0)).build();
-        Proposta p2 = Proposta.builder().licitacao(l1).fornecedor("Fornecedor B").nota(8L).preco(110L).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 30)).build();
-        Proposta p3 = Proposta.builder().licitacao(l1).fornecedor("Fornecedor C").nota((long) 8.9).preco(115L).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 40)).build();
-        Proposta p4 = Proposta.builder().licitacao(l1).fornecedor("Fornecedor D").nota((long) 7.5).preco(90L).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 50)).build();
+        Proposta p1 = Proposta.builder().licitacao(l1).fornecedor("Fornecedor A").nota(8D).preco(110D).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 0)).build();
+        Proposta p2 = Proposta.builder().licitacao(l1).fornecedor("Fornecedor B").nota(8D).preco(110D).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 30)).build();
+        Proposta p3 = Proposta.builder().licitacao(l1).fornecedor("Fornecedor C").nota(8.9).preco(115D).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 40)).build();
+        Proposta p4 = Proposta.builder().licitacao(l1).fornecedor("Fornecedor D").nota(7.5).preco(90D).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 50)).build();
 
-        Proposta p5 = Proposta.builder().licitacao(l2).fornecedor("Fornecedor A").preco(115L).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 0)).build();
-        Proposta p6 = Proposta.builder().licitacao(l2).fornecedor("Fornecedor B").preco(115L).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 30)).build();
-        Proposta p7 = Proposta.builder().licitacao(l2).fornecedor("Fornecedor C").preco(100L).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 40)).build();
+        Proposta p5 = Proposta.builder().licitacao(l2).fornecedor("Fornecedor A").preco(115D).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 0)).build();
+        Proposta p6 = Proposta.builder().licitacao(l2).fornecedor("Fornecedor B").preco(115D).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 30)).build();
+        Proposta p7 = Proposta.builder().licitacao(l2).fornecedor("Fornecedor C").preco(100D).dataCadastro(LocalDateTime.of(2019, 10, 23, 10, 40)).build();
         propostaService.salvar(p1);
         propostaService.salvar(p2);
         propostaService.salvar(p3);

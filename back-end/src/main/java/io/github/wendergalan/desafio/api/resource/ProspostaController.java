@@ -2,6 +2,7 @@ package io.github.wendergalan.desafio.api.resource;
 
 import io.github.wendergalan.desafio.api.dto.PropostaDTO;
 import io.github.wendergalan.desafio.api.dto.ResponseDTO;
+import io.github.wendergalan.desafio.model.entity.Licitacao;
 import io.github.wendergalan.desafio.model.entity.Proposta;
 import io.github.wendergalan.desafio.service.PropostaService;
 import io.swagger.annotations.Api;
@@ -52,7 +53,9 @@ public class ProspostaController {
         if (result.hasErrors())
             return ResponseEntity.badRequest().body(criarListaDeErros(result.getAllErrors()));
 
-        Proposta entity = propostaService.salvar(modelMapper.map(propostaDTO, Proposta.class));
+        Proposta entity = modelMapper.map(propostaDTO, Proposta.class);
+        entity.setLicitacao(modelMapper.map(propostaDTO.getLicitacao(), Licitacao.class));
+        entity = propostaService.salvar(entity);
 
         return ResponseEntity
                 .created(MvcUriComponentsBuilder.fromController(getClass()).build().toUri())

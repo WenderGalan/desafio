@@ -31,11 +31,11 @@ public class Proposta {
     @NotNull
     private String fornecedor;
 
-    private Long nota;
+    private Double nota;
 
     @Column(name = "preco", nullable = false)
     @NotNull
-    private Long preco;
+    private Double preco;
 
     @Column(name = "data_cadastro", nullable = false)
     @NotNull
@@ -74,7 +74,7 @@ public class Proposta {
      */
     public static void classificarPorNotaPreco(List<Proposta> propostas) {
         propostas.sort((p1, p2) -> {
-            int nota = p1.getNota().compareTo(p2.getNota());
+            int nota = p1.getNota().compareTo(p2.getNota()) * -1;
             if (nota == 0) {
                 int preco = p1.getPreco().compareTo(p2.getPreco());
                 if (preco == 0) {
