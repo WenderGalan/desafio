@@ -11,6 +11,9 @@ import java.io.PrintWriter;
 
 import static io.github.wendergalan.desafio.config.security.WebSecurityConfiguration.REALM;
 
+/**
+ * The type My basic authentication entry point.
+ */
 @Component
 public class MyBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
 

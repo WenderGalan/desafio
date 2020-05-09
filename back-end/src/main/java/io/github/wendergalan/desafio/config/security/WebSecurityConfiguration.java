@@ -12,12 +12,24 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+/**
+ * The type Web security configuration.
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    /**
+     * The constant REALM.
+     */
     public static String REALM = "DESAFIO_API";
 
+    /**
+     * Configure global security.
+     *
+     * @param auth the auth
+     * @throws Exception the exception
+     */
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("desafio-api").password("{noop}123456admin").roles("ADMIN");
@@ -32,6 +44,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
+    /**
+     * Gets basic auth entry point.
+     *
+     * @return the basic auth entry point
+     */
     @Bean
     public MyBasicAuthenticationEntryPoint getBasicAuthEntryPoint() {
         return new MyBasicAuthenticationEntryPoint();
