@@ -1,11 +1,12 @@
 <template src="./PropostaTemplate.html" />
 
 <script>
+import Form from '../../app/Mixins/Form'
+
 export default {
   name: 'Proposta',
+  mixins: [Form],
   data: () => ({
-    items: [],
-    loadingText: 'Aguarde, está carregando os dados.',
     loadingData: false,
     calculateWidths: true,
     dialog: false,
@@ -39,7 +40,6 @@ export default {
         sortable: false
       }
     ],
-    editedIndex: -1,
     formHasErrors: false,
     licitacao: null,
     record: {
@@ -55,15 +55,6 @@ export default {
       dataCadastro: null
     },
     serverItemsLength: 0,
-    optionsTable: {
-      page: 1,
-      itemsPerPage: 10,
-      pageStart: 1,
-      pageStop: 1,
-      pageCount: 1,
-      itemsLength: 10,
-      rowsPerPageItems: [1, 2, 4, 8, 16]
-    },
     service: {
       resource: '/propostas',
       serviceLicitacao: '/licitacoes'
@@ -112,12 +103,7 @@ export default {
     },
     /**
      */
-    updatePagination (pagination) {
-      this.findPropostas({ page: pagination.page, size: pagination.itemsPerPage })
-    },
-    /**
-     */
-    findPropostas ({ page, size }) {
+    findItems ({ page, size }) {
       this.loadingData = true
       this.$http.get(`${this.service.serviceLicitacao}/${this.licitacao.id}/propostas`, { params: { page, size } })
         .then((response) => {
@@ -125,78 +111,13 @@ export default {
           this.serverItemsLength = response.data.totalElements
           this.items = response.data.content
         })
-        .catch(() => (this.loadingData = false))
+        .finally(() => (this.loadingData = false))
     },
     /**
      */
-    editItem (item) {
-      this.editedIndex = this.items.indexOf(item)
-      this.record = Object.assign({}, item)
-      this.dialog = true
-    },
-    /**
-     */
-    deleteItem (item) {
-      const index = this.items.indexOf(item)
-      if (confirm('Você tem certeza que deseja deletar este registro?')) {
-        this.$http.delete(`${this.service.resource}/${this.items[index].id}`)
-          .then(() => {
-            this.items.splice(index, 1)
-            this.updatePagination({ page: this.optionsTable.page, size: this.optionsTable.itemsPerPage })
-          })
-      }
-    },
-    /**
-     */
-    close () {
-      this.dialog = false
-      setTimeout(() => {
-        this.record = Object.assign({}, this.defaultRecord)
-        this.editedIndex = -1
-      }, 300)
-    },
-    /**
-     */
-    validateForm () {
-      return new Promise(((resolve, reject) => {
-        this.formHasErrors = false
-        Object.keys(this.form).forEach(f => {
-          if (!this.form[f]) {
-            this.formHasErrors = true
-          }
-          if (this.$refs[f]) {
-            this.$refs[f].validate(true)
-          }
-        })
-        if (!this.formHasErrors) {
-          return resolve()
-        }
-        return reject()
-      }))
-    },
-    /**
-     */
-    save () {
-      this.validateForm()
-        .then(() => {
-          // Atribui a licitacao antes de salvar ou editar
-          this.record.licitacao = this.licitacao
-          if (this.editedIndex > -1) {
-            this.$http.put(`${this.service.resource}/${this.record.id}`, this.record)
-              .then((response) => {
-                Object.assign(this.items[this.editedIndex], response.data)
-                this.close()
-              })
-          }
-          else {
-            this.$http.post(`${this.service.resource}`, this.record)
-              .then((response) => {
-                this.record.id = response.data.id
-                this.updatePagination({ page: this.optionsTable.page, size: this.optionsTable.itemsPerPage })
-                this.close()
-              })
-          }
-        })
+    beforeSave () {
+      // Atribui a licitacao antes de salvar
+      this.record.licitacao = this.licitacao
     }
   },
   created () {

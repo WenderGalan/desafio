@@ -17,3 +17,5 @@ Vue.use({
     })
   }
 })
+
+export default axios

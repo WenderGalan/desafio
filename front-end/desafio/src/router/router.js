@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Licitacao from './components/licitacao/Licitacao'
-import Proposta from './components/proposta/Proposta'
-import Sobre from './components/sobre/Sobre'
+import Licitacao from '../components/licitacao/Licitacao'
+import Proposta from '../components/proposta/Proposta'
+import Sobre from '../components/sobre/Sobre'
 
 Vue.use(Router)
 
